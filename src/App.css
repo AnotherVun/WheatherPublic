@@ -1,0 +1,130 @@
+body {
+  background-color: #0b0c10; /* Темный фон */
+  font-family: 'Orbitron', sans-serif; /* Шрифт в стиле "Трон" */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Высота экрана */
+  margin: 0; /* Убираем отступы */
+  overflow: hidden; /* Скрываем переполнение */
+  position: relative; /* Для позиционирования фигур */
+}
+
+.App {
+  background: rgba(31, 40, 51, 0.9); /* Полупрозрачный цвет фона карточки */
+  border-radius: 15px; /* Закругленные углы */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), /* Неоновая тень */
+              0 0 40px rgba(0, 255, 255, 0.3); /* Более мягкая неоновая тень */
+  padding: 30px; /* Отступы внутри карточки */
+  width: 350px; /* Ширина карточки */
+  text-align: center; /* Центрируем текст */
+  color: #66fcf1; /* Цвет текста */
+}
+
+h1 {
+  color: #ffffff; /* Цвет заголовка */
+  font-size: 24px; /* Размер шрифта заголовка */
+  margin-bottom: 20px; /* Отступ снизу */
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* Неоновый эффект для заголовка */
+}
+
+select {
+  background: #1f2833; /* Цвет фона для выпадающего списка */
+  border: 2px solid #66fcf1; /* Неоновая граница */
+  border-radius: 10px; /* Закругленные углы */
+  padding: 10px; /* Отступы внутри */
+  margin: 10px 0; /* Отступы сверху и снизу */
+  color: #66fcf1; /* Цвет текста */
+  font-size: 16px; /* Размер шрифта */
+  cursor: pointer; /* Курсор при наведении */
+  transition: border-color 0.3s ease; /* Плавный переход цвета границы */
+}
+
+select:hover {
+  border-color: #45a29e; /* Цвет границы при наведении */
+}
+
+button {
+  background: #66fcf1; /* Цвет фона для кнопки */
+  border: none; /* Убираем границу */
+  border-radius: 10px; /* Закругленные углы */
+  padding: 10px 20px; /* Отступы внутри */
+  margin-top: 10px; /* Отступ сверху */
+  color: #0b0c10; /* Цвет текста кнопки */
+  font-size: 16px; /* Размер шрифта */
+  cursor: pointer; /* Курсор при наведении */
+  transition: background 0.3s ease, box-shadow 0.3s ease; /* Плавный переход */
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Неоновая тень */
+}
+
+button:hover {
+  background: #45a29e; /* Цвет фона при наведении */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.7); /* Увеличенная неоновая тень при наведении */
+}
+
+/* Анимация неоновых фигур */
+.neon-shape {
+  position: absolute;
+  background: rgba(0, 255, 255, 0.5); /* Более яркий неоновый цвет */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+  animation: float 6s ease-in-out infinite, move 10s linear infinite; /* Плавная анимация */
+  border-radius: 50%; /* Начальная форма - круг */
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes move {
+  0% {
+    transform: translate(0, 0) scale(1);
+    border-radius: 50%; /* Круг */
+  }
+  25% {
+    transform: translate(100px, -50px) scale(1.5); /* Увеличение и перемещение */
+    border-radius: 30%; /* Прямоугольник */
+  }
+  50% {
+    transform: translate(-100px, 50px) scale(0.8); /* Уменьшение и перемещение */
+    border-radius: 10%; /* Овальная форма */
+  }
+  75% {
+    transform: translate(50px, 100px) scale(1.2); /* Увеличение и перемещение */
+    border-radius: 70%; /* Почти круглая форма */
+  }
+  100% {
+    transform: translate(0, 0) scale(1); /* Возврат к исходной позиции */
+    border-radius: 50%; /* Круг */
+  }
+}
+
+/* Пример неоновых фигур */
+.shape1 {
+  width: 100px;
+  height: 100px;
+  top: 20%;
+  left: 10%;
+}
+
+.shape2 {
+  width: 150px;
+  height: 150px;
+  top: 60%;
+  right: 15%;
+}
+
+.shape3 {
+  width: 80px;
+  height: 80px;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
