@@ -1,31 +1,73 @@
 body {
-  background-color: #0b0c10; /* Темный фон */
-  font-family: 'Orbitron', sans-serif; /* Шрифт в стиле "Трон" */
+  background-image: url('./assets/bg.png'); /* Путь к изображению фона */
+  background-size: cover; /* Масштабируем изображение, чтобы оно заполнило весь экран */
+  background-repeat: no-repeat; /* Отключаем повторение изображения */
+  background-position: center; /* Центрируем изображение */
+  background-color: #87CEEB; /* Небесно-голубой фон в случае, если изображение не загрузится */
+  font-family: 'Press Start 2P', cursive; /* Шрифт в стиле Марио */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh; /* Высота экрана */
   margin: 0; /* Убираем отступы */
   overflow: hidden; /* Скрываем переполнение */
-  position: relative; /* Для позиционирования фигур */
+  position: relative; /* Для позиционирования элементов */
+  cursor: url('./assets/mushroom.png'), auto; /* Установка грибочка как курсора */
 }
 
 .App {
-  background: rgba(31, 40, 51, 0.9); /* Полупрозрачный цвет фона карточки */
+  background: #8B4513; /* Цвет фона карточки (коричневый) */
   border-radius: 15px; /* Закругленные углы */
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), /* Неоновая тень */
-              0 0 40px rgba(0, 255, 255, 0.3); /* Более мягкая неоновая тень */
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); /* Золотая тень */
   padding: 30px; /* Отступы внутри карточки */
   width: 350px; /* Ширина карточки */
   text-align: center; /* Центрируем текст */
-  color: #66fcf1; /* Цвет текста */
+  color: #FFFFFF; /* Цвет текста */
+  position: relative; /* Для позиционирования Марио */
+  /* overflow: hidden; Скрываем переполнение */
+}
+
+/* Псевдоэлемент для облаков */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px; /* Высота области для облаков */
+  background-image: url('./assets/cloud1.png'), url('./assets/cloud2.png'); /* Путь к изображениям облаков */
+  background-repeat: repeat;
+  background-size: 140px auto; /* Размер облаков */
+  animation: moveClouds 30s linear infinite; /* Анимация движения облаков */
+}
+
+@keyframes moveClouds {
+  0% {
+    background-position: 0 0, 50% 0; /* Начальная позиция облаков */
+  }
+  100% {
+    background-position: 100% 0, 150% 0; /* Конечная позиция облаков */
+  }
 }
 
 h1 {
-  color: #ffffff; /* Цвет заголовка */
+  color: #FFD700; /* Золотой цвет заголовка */
   font-size: 24px; /* Размер шрифта заголовка */
   margin-bottom: 20px; /* Отступ снизу */
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* Неоновый эффект для заголовка */
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7); /* Золотой эффект для заголовка */
+}
+
+.mario {
+  position: absolute;
+  top: -70px; /* Позиция сверху, чтобы Марио был над карточкой */
+  left: 50%; /* Центрируем по горизонтали */
+  transform: translateX(-50%); /* Центрируем по горизонтали */
+  width: 70px; /* Ширина Марио (измените по необходимости) */
+  height: 70px; /* Высота Марио (измените по необходимости) */
+  background-image: url('./assets/mario.png'); /* Путь к спрайту Марио */
+  background-size: contain; /* Масштабирование спрайта, чтобы он полностью помещался */
+  background-repeat: no-repeat; /* Не повторять изображение */
+  transition: left 2s ease-in-out; /* Плавный переход для движения */
 }
 
 select {
@@ -65,66 +107,10 @@ button:hover {
 /* Анимация неоновых фигур */
 .neon-shape {
   position: absolute;
-  background: rgba(0, 255, 255, 0.5); /* Более яркий неоновый цвет */
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
-  animation: float 6s ease-in-out infinite, move 10s linear infinite; /* Плавная анимация */
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.7), rgba(0, 150, 255, 0.7)); /* Градиент */
   border-radius: 50%; /* Начальная форма - круг */
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes move {
-  0% {
-    transform: translate(0, 0) scale(1);
-    border-radius: 50%; /* Круг */
-  }
-  25% {
-    transform: translate(100px, -50px) scale(1.5); /* Увеличение и перемещение */
-    border-radius: 30%; /* Прямоугольник */
-  }
-  50% {
-    transform: translate(-100px, 50px) scale(0.8); /* Уменьшение и перемещение */
-    border-radius: 10%; /* Овальная форма */
-  }
-  75% {
-    transform: translate(50px, 100px) scale(1.2); /* Увеличение и перемещение */
-    border-radius: 70%; /* Почти круглая форма */
-  }
-  100% {
-    transform: translate(0, 0) scale(1); /* Возврат к исходной позиции */
-    border-radius: 50%; /* Круг */
-  }
-}
-
-/* Пример неоновых фигур */
-.shape1 {
-  width: 100px;
-  height: 100px;
-  top: 20%;
-  left: 10%;
-}
-
-.shape2 {
-  width: 150px;
-  height: 150px;
-  top: 60%;
-  right: 15%;
-}
-
-.shape3 {
-  width: 80px;
-  height: 80px;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+  width: 100px; /* Начальная ширина */
+  height: 100px; /* Начальная высота */
+  transition: transform 0.3s ease; /* Плавный переход */
 }

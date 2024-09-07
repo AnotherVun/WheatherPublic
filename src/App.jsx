@@ -9,7 +9,8 @@ function App() {
     const [selectedCity, setSelectedCity] = useState(cities[0]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const apiKey = 'ВАШ_API_КЛЮЧ';
+    const apiKey ='9dd754f53dec4a39890145431241908';
+    const [marioPosition, setMarioPosition] = useState({ left: '50%', scaleX: 1 });
 
     useEffect(() => {
         fetchWeather(selectedCity);
@@ -33,12 +34,23 @@ function App() {
     };
 
     const handleMouseMove = (e) => {
-        const shapes = document.querySelectorAll('.neon-shape');
-        shapes.forEach(shape => {
-            const x = e.clientX + (Math.random() * 200 - 100); // Случайное смещение по X
-            const y = e.clientY + (Math.random() * 200 - 100); // Случайное смещение по Y
-            shape.style.transform = `translate(${x}px, ${y}px)`; // Перемещение фигуры
-        });
+        const screenWidth = window.innerWidth;
+        const mouseX = e.clientX;
+
+        // Определяем, в какой части экрана находится курсор
+        if (mouseX > screenWidth / 2) {
+            // Курсор в правой части экрана
+            setMarioPosition({
+                left: 'calc(100% - 70px)', // Двигаем Марио к правому краю
+                scaleX: 1 // Не зеркалим
+            });
+        } else {
+            // Курсор в левой части экрана
+            setMarioPosition({
+                left: '0', // Двигаем Марио к левому краю
+                scaleX: -1 // Зеркалим по горизонтали
+            });
+        }
     };
 
     useEffect(() => {
@@ -63,13 +75,33 @@ function App() {
             </select>
             {loading && <p>Загрузка...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            {weatherData && <WeatherDisplay data={weatherData} />}
+            {weatherData && (
+                <div className="weather-table">
+                    <div className="left-column">
+                        <h2>{weatherData.location.name}</h2>
+                        <img src={weatherData.current.condition.icon} alt="Weather Icon" />
+                    </div>
+                    <div className="right-column">
+                        <p>Температура: {weatherData.current.temp_c} °C</p>
+                        <p>Состояние: {weatherData.current.condition.text}</p>
+                        <p>Влажность: {weatherData.current.humidity} %</p>
+                        <p>Скорость ветра: {weatherData.current.wind_kph} км/ч</p>
+                    </div>
+                </div>
+            )}
             <button onClick={() => fetchWeather(selectedCity)}>Получить погоду</button>
 
-            {/* Неоновые фигуры */}
-            <div className="neon-shape"></div>
-            <div className="neon-shape"></div>
-            <div className="neon-shape"></div>
+            {/* Марио */}
+            <div
+                className="mario"
+                style={{
+                    left: marioPosition.left,
+                    transform: `scaleX(${marioPosition.scaleX})`
+                }}
+            ></div>
+
+            {/* Облака */}
+
         </div>
     );
 }
