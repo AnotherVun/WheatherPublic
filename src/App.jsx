@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react';
 import WeatherDisplay from './components/WeatherDisplay';
 import './App.css'; // Импортируем стили
 
-const cities = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань'];
+// const cities = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань'];
 
 function App() {
     const [weatherData, setWeatherData] = useState(null);
-    const [selectedCity, setSelectedCity] = useState(cities[0]);
+    // const [selectedCity, setSelectedCity] = useState(cities[0]);
     const [loading, setLoading] = useState(false);
+    const [city, setCity] = useState('Киев')
     const [error, setError] = useState(null);
     const apiKey ='9dd754f53dec4a39890145431241908';
     const [marioPosition, setMarioPosition] = useState({ left: '50%', scaleX: 1 });
 
-    useEffect(() => {
-        fetchWeather(selectedCity);
-    }, [selectedCity]);
+    // useEffect(() => {
+    //     fetchWeather(selectedCity);
+    // }, [selectedCity]);
 
     const fetchWeather = async (city) => {
         setLoading(true);
@@ -25,6 +26,7 @@ function App() {
                 throw new Error('Ошибка при получении данных');
             }
             const data = await response.json();
+            console.log(data)
             setWeatherData(data);
         } catch (error) {
             setError(error.message);
@@ -60,36 +62,27 @@ function App() {
         };
     }, []);
 
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Предотвращаем перезагрузку страницы
+        fetchWeather(city); // Запрашиваем погоду для введенного города
+    };
+
     return (
         <div className="App">
             <h1>Приложение с погодой</h1>
-            <select
-                onChange={(e) => setSelectedCity(e.target.value)}
-                value={selectedCity}
-            >
-                {cities.map((city) => (
-                    <option key={city} value={city}>
-                        {city}
-                    </option>
-                ))}
-            </select>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    placeholder="Введите название города"
+                />
+                <button type="submit">Получить погоду</button>
+            </form>
             {loading && <p>Загрузка...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            {weatherData && (
-                <div className="weather-table">
-                    <div className="left-column">
-                        <h2>{weatherData.location.name}</h2>
-                        <img src={weatherData.current.condition.icon} alt="Weather Icon" />
-                    </div>
-                    <div className="right-column">
-                        <p>Температура: {weatherData.current.temp_c} °C</p>
-                        <p>Состояние: {weatherData.current.condition.text}</p>
-                        <p>Влажность: {weatherData.current.humidity} %</p>
-                        <p>Скорость ветра: {weatherData.current.wind_kph} км/ч</p>
-                    </div>
-                </div>
-            )}
-            <button onClick={() => fetchWeather(selectedCity)}>Получить погоду</button>
+            {weatherData && <WeatherDisplay data={weatherData} />}
+
 
             {/* Марио */}
             <div
