@@ -12,6 +12,7 @@ function SearchBar({ setLocation }) {
 
   return (
     <div>
+      
       <input
         type="text"
         value={input}
