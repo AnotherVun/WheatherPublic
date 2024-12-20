@@ -1,0 +1,27 @@
+priorityQueue.add(vertex); // Добавляем все узлы в очередь
+// console.log({distances, previous, priorityQueue})
+
+distances[start] = 0; // Расстояние до стартового узла равно 0
+// console.log({distances, previous, priorityQueue})
+
+while (priorityQueue.size > 0) {
+  // Выбираем узел с минимальным расстоянием
+  let currentNode = [...priorityQueue].reduce((minNode, node) =>
+    distances[node] < distances[minNode] ? node : minNode
+  );
+  // console.log(currentNode, priorityQueue)
+  priorityQueue.delete(currentNode); // Убираем узел из очереди
+
+  // Если нашли целевой узел, восстанавливаем путь
+  if (currentNode === target) {
+    return this.reconstructPath(previous, target);
+  }
+
+  // Обрабатываем всех соседей текущего узла
+  for (const neighbor of this.graphStructure[currentNode].neighbors) {
+    // console.log('currentNode - ', currentNode, 'CurrentNode -', neighbor)
+    // ...existing code...
+  }
+  // ...existing code...
+}
+// ...existing code...
