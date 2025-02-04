@@ -1,65 +1,69 @@
 class NewYear2025 {
-  constructor() {
+  constructor(){
     this.graphStructure = {}
   }
 
-  addVertex(name, atributes = {}) {
+  addVertex(name){
     if (!this.graphStructure[name]) {
-      this.graphStructure[name] = { childs: [], atributes }
+      this.graphStructure[name] = {kids: []}
     }
   }
 
-  addEdge(mainNode, childNode, weight) {
-    if (!this.graphStructure[mainNode]) {
-      this.addVertex(mainNode)
+  addEdge(mainVertex, childVertex, weight){
+    if (!this.graphStructure[mainVertex]) {
+      this.addVertex(mainVertex)
     }
-    if (!this.graphStructure[childNode]) {
-      this.addVertex(childNode)
+    if (!this.graphStructure[childVertex]) {
+      this.addVertex(childVertex)
     }
-
-    this.graphStructure[mainNode].childs.push({node: childNode, weight})
+    // console.log(this.graphStructure)
+    this.graphStructure[mainVertex].kids.push({node: childVertex, weight})
   }
 
-  dijkstra(start, target) {
-    const queue = new Set()
+  dijkstra(start, target){
     const distances = {}
-    const previousParent = {}
+    const queue = new Set()
+    const previousNode = {}
 
-    for(let vertex in this.graphStructure){
-      queue.add(vertex)
-      distances[vertex] = Infinity
-      previousParent[vertex] = null
+    for(let node in this.graphStructure){
+      distances[node] = Infinity;
+      queue.add(node)
+      previousNode[node] = null
     }
 
     distances[start] = 0
-    while (queue.size > 0) {
-      let currentNode = [...queue].reduce((minNode, node) =>
-        distances[minNode] < distances[node] ? minNode : node)
 
-      queue.delete(currentNode)
+    while(queue.size > 0){
+      const currentNode = [...queue].reduce((minNode, maxNode) =>
+      distances[minNode] < distances[maxNode] ? minNode : maxNode)
+
       if (currentNode === target) {
-        return this.reconstruction(previousParent, target)
+        return this.reconstruction(previousNode, target)
       }
 
-      for(let child of this.graphStructure[currentNode].childs){
-        let {node, weight} = child
-        let altWeight = distances[currentNode] + weight
+      queue.delete(currentNode)
+      // console.log(currentNode)
+      for(let kid of this.graphStructure[currentNode].kids){
+        let {node, weight} = kid
+        let alt = distances[currentNode] + weight
 
-        if (altWeight < distances[node]) {
-          distances[node] = altWeight
-          previousParent[node] = currentNode
+        if(alt < distances[node]){
+          distances[node] = alt
+          previousNode[node] = currentNode
         }
       }
     }
+
+
   }
 
-  reconstruction(previousData, target){
-    let currentStep = target
+  reconstruction(previousNode, target){
+    let currentStep = target;
     let path = []
 
-    while (currentStep) {
+    while(currentStep){
       path.push(currentStep)
-      currentStep = previousData[currentStep]
+      currentStep = previousNode[currentStep]
     }
 
     return path.reverse().join(' => ')
@@ -100,3 +104,16 @@ graph.addEdge("K", "M", 4);
 // Вызываем алгоритм Дейкстры
 console.log('START')
 console.log(graph.dijkstra("A", "M"));
+
+
+const search = function(nums, target) {
+  let mid, left, right
+
+  while(true){
+      mid = nums.length / 2
+      left = nums[0]
+      right = nums[length - 1]
+      if(nums[mid] === target) return nums[mid]
+      nums
+  }
+};
